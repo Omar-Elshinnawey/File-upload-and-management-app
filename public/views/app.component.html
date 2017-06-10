@@ -1,0 +1,34 @@
+<md-sidenav-container>
+    <header></header>
+
+    <md-sidenav #sidenav mode="over">
+        <div *ngIf="header.default; else admin">
+            <md-nav-list>
+                <a md-list-item routerLink="resources" [routerLinkActive]="['active']">
+                    <md-icon>folder</md-icon><span>Resources</span>
+                </a>
+                <a md-list-item routerLink="login" [routerLinkActive]="['active']">
+                    <md-icon>input</md-icon><span>Login</span>
+                </a>
+            </md-nav-list>
+        </div>
+
+        <ng-template #admin>
+            <div>
+                <md-nav-list>
+                    <a md-list-item href="#">
+                        <md-icon>folder</md-icon><span>Resources</span>
+                    </a>
+                    <a md-list-item href="#">
+                        <md-icon>create_new_folder</md-icon><span>Add</span>
+                    </a>
+                    <a md-list-item href="#">
+                        <md-icon>power_settings_new</md-icon><span>Logout</span>
+                    </a>
+                </md-nav-list>
+            </div>
+        </ng-template>
+    </md-sidenav>
+
+    <router-outlet></router-outlet>
+</md-sidenav-container>

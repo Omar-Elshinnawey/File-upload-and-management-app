@@ -1,0 +1,29 @@
+md-sidenav-container {
+    min-height: 100%;
+}
+
+md-sidenav ul {
+    list-style: none;
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    padding: 10px;
+    cursor: pointer;
+}
+
+a:hover {
+    background-color: #ededed;
+}
+
+.active {
+    background-color: #ededed;
+}
+
+a span {
+    margin: 0 5px;
+    font-size: 24px;
+    line-height: 1;
+}

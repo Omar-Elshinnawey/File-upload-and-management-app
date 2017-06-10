@@ -1,0 +1,22 @@
+<div class="files">
+
+    <md-card>
+        <md-card-header>
+            <md-card-title>
+                <h2>Files</h2>
+            </md-card-title>
+        </md-card-header>
+
+        <md-card-content>
+            <h3 *ngIf="!folders || folders.length === 0; else files">No files currently</h3>
+
+            <ng-template #files>
+                <md-list>
+                    <md-list-item *ngFor="let folder of folders">
+                        <md-icon>folder</md-icon><span>{{folder.title}}</span>
+                    </md-list-item>
+                </md-list>
+            </ng-template>
+        </md-card-content>
+    </md-card>
+</div>
