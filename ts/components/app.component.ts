@@ -1,7 +1,10 @@
 import { Component, ViewChild, EventEmitter } from '@angular/core';
 import {MdSidenav} from '@angular/material';
+import {Router} from '@angular/router'
 
-import {HeaderService} from '../services';
+import {HeaderService, AuthService} from '../services';
+
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
     selector: 'app',
@@ -11,16 +14,21 @@ import {HeaderService} from '../services';
 export class AppComponent {
 
     @ViewChild('sidenav') sidenav: MdSidenav;
+    private subs: Subscription[];
 
-    constructor(public header: HeaderService) { }
+    constructor(public header: HeaderService, private auth: AuthService, private router: Router) {
+        this.subs = new Array();
+    }
 
     ngOnInit(){
-        this.header.sideNavEvent.subscribe((action: string) => {
+        var sub = this.header.sideNavEvent.subscribe((action: string) => {
             if(action === 'open')
                 this.openSideNav();
             else
                 this.closeSideNav();
         });
+
+        this.subs.push(sub);
     }
 
     openSideNav(){
@@ -29,5 +37,13 @@ export class AppComponent {
 
     closeSideNav(){
         this.sidenav.close();
+    }
+
+    logout(){
+        this.auth.logout();
+    }
+
+    ngOnDestroy(){
+        this.subs.forEach(sub => sub.unsubscribe());
     }
 }

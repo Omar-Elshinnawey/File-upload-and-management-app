@@ -5,3 +5,15 @@ import '@angular/forms';
 import '@angular/router';
 import '@angular/material';
 import '@angular/common';
+import '@angular/animations';
+import 'firebase/auth';
+import 'firebase/database';
+import 'firebase/storage';
+import 'angularfire2';
+import 'angularfire2/auth';
+import 'angularfire2/database';
+
+import 'rxjs/Observable';
+import 'rxjs/add/observable/throw';
+import 'rxjs/add/operator/toPromise';
+import 'rxjs/Subscription';

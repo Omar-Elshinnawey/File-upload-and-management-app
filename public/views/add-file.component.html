@@ -1,0 +1,31 @@
+<div>
+    <md-card>
+        <md-card-title>
+            <h2>Upload a File</h2>
+        </md-card-title>
+        <md-card-content>
+            <form (ngSubmit)="onsubmit()" #addFileForm="ngForm">
+                <div>
+                    <input type="file" name="file" ngModel (change)="getFile($event)" #fileInput hidden>
+                    <md-input-container>
+                        <input mdInput type="text" disabled [value]="file? file.name: 'no file selected'">
+                    </md-input-container>
+                    <button type="button" (click)="fileInput.click()" md-raised-button color="primary">Choose a file</button>
+                </div>
+
+                <div>
+                    <md-select placeholder="select a folder" [(ngModel)]="folderIndex" name="folder">
+                        <md-option [value]="-1">Create new</md-option>
+                        <md-option *ngFor="let folder of folders" [value]="index">
+                            {{folder.title}}
+                        </md-option>
+                    </md-select>
+                    <md-input-container *ngIf="folderIndex === -1">
+                        <input mdInput type="text" name="folder" placeholder="New folder name" [(ngModel)]="folder">
+                    </md-input-container>
+                </div>
+                <button md-raised-button color="primary" type="submit">upload</button>
+            </form>
+        </md-card-content>
+    </md-card>
+</div>

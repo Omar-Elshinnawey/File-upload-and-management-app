@@ -12,9 +12,20 @@
 
             <ng-template #files>
                 <md-list>
-                    <md-list-item *ngFor="let folder of folders">
-                        <md-icon>folder</md-icon><span>{{folder.title}}</span>
-                    </md-list-item>
+                    <div *ngFor="let folder of folders">
+                        <md-list-item [ngClass]="{'active': folder.expanded}" (click)="toggleExpand(folder)">
+                            <md-icon>folder</md-icon><span>{{folder.title}}</span>
+                        </md-list-item>
+                        <md-divider></md-divider>
+                        <div *ngIf="folder.expanded" [@collapse]="folder.expanded">
+                            <md-list-item *ngFor="let file of folder.files">
+                                <md-icon>insert_drive_file</md-icon>
+                                <span>{{file.title}}</span>
+                            </md-list-item>
+                        </div>
+                        <md-divider></md-divider>
+                    </div>
+
                 </md-list>
             </ng-template>
         </md-card-content>

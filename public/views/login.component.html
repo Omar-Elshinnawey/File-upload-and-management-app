@@ -1,17 +1,21 @@
 <div class="login">
-    <form #loginForm="ngForm" (ngSubmit)="onsubmit">
+    <form #loginForm="ngForm" (ngSubmit)="onsubmit()">
         <div>
             <md-input-container>
-                <input mdInput type="text" name="username" placeholder="Username" [(ngModel)]="username">
+                <input mdInput type="text" name="username" placeholder="Username" [(ngModel)]="username" required>
             </md-input-container>
         </div>
 
         <div>
             <md-input-container>
-                <input mdInput type="password" name="password" placeholder="Password" [(ngModel)]="password">
+                <input mdInput type="password" name="password" placeholder="Password" [(ngModel)]="password" required>
             </md-input-container>
         </div>
 
         <button md-raised-button color="primary" type="submit">Login</button>
+
+        <div>
+            <p>{{error}}</p>
+        </div>
     </form>
 </div>

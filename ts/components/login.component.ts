@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
+import {Router} from '@angular/router';
 
-import {HeaderService} from '../services';
+import {HeaderService, AuthService, SnackBarService} from '../services';
 
 @Component({
     selector: 'login',
@@ -9,9 +10,32 @@ import {HeaderService} from '../services';
 })
 export class LoginComponent{
 
-    constructor(public header: HeaderService) {
+    username: string;
+    password: string;
+
+    constructor(public header: HeaderService, 
+                private auth: AuthService, 
+                private router: Router,
+                public snackbar: SnackBarService) {
         this.header.closeSidenav();
         this.header.showDefault();
     }
 
+    ngOnInit(){
+        var sub = this.auth.onAuthState(
+            () => {this.router.navigate(['admin'])},
+            () => {}
+        );
+    }
+
+    onsubmit(){
+        if(!this.username || !this.password)
+            return this.snackbar.open('Email and password are required');
+
+        this.auth.login(this.username, this.password)
+        .then((user) => {
+            this.router.navigate(['admin']);
+        })
+        .catch((err) => {this.snackbar.open(err.message)});
+    }
 }

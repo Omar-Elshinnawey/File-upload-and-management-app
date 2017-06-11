@@ -16,13 +16,13 @@
         <ng-template #admin>
             <div>
                 <md-nav-list>
-                    <a md-list-item href="#">
+                    <a md-list-item routerLink="resources" [routerLinkActive]="['active']">
                         <md-icon>folder</md-icon><span>Resources</span>
                     </a>
-                    <a md-list-item href="#">
+                    <a md-list-item routerLink="admin/add" [routerLinkActive]="['active']">
                         <md-icon>create_new_folder</md-icon><span>Add</span>
                     </a>
-                    <a md-list-item href="#">
+                    <a md-list-item href="javascript:void(0)" (click)="logout()">
                         <md-icon>power_settings_new</md-icon><span>Logout</span>
                     </a>
                 </md-nav-list>

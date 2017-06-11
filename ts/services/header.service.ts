@@ -7,7 +7,7 @@ export class HeaderService {
     default = true;
     sideNavEvent = new EventEmitter<string>();
 
-    constructor() { }
+    constructor() {}
 
     showDefault(){
         this.visible = this.default = true;

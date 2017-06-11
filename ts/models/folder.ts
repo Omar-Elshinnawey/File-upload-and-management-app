@@ -1,6 +1,7 @@
-import {File} from './file';
+import {UploadFile} from './file';
 
 export class Folder{
     title: string;
-    files: File[];
+    files: UploadFile[];
+    expanded: boolean;
 }
