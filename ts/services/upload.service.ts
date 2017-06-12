@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import {UUID} from 'angular2-uuid';
 
 import * as firebase from 'firebase/app';
 
@@ -17,7 +18,7 @@ export class UploadService{
 
     uploadFile(foldername: string, file:File){
         let storageRef = firebase.storage().ref();
-        this.uploadTask = storageRef.child(`${foldername}/${file.name}`).put(file);
+        this.uploadTask = storageRef.child(`${foldername}/${UUID.UUID()}/${file.name}`).put(file);
 
         return this.uploadTask;
     }
@@ -25,6 +26,14 @@ export class UploadService{
     saveFileData(foldername: string, uploadFile: UploadFile){
         let dbRef = this.db.database.ref('folders');
 
-        dbRef.child(`${foldername}/${uploadFile.title}`).set(uploadFile.downloadUrl);
+        dbRef.child(`${foldername}/${UUID.UUID()},${uploadFile.title}`).set(uploadFile.downloadUrl);
+    }
+
+    getFolders(): firebase.Promise<firebase.database.DataSnapshot>{
+        return this.db.database.ref('folders').once('value');
+    }
+
+    watchFolders(cb: (snapshot: firebase.database.DataSnapshot) => void){
+        
     }
 }

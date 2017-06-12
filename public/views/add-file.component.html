@@ -6,7 +6,7 @@
         <md-card-content>
             <form (ngSubmit)="onsubmit()" #addFileForm="ngForm">
                 <div>
-                    <input type="file" name="file" ngModel (change)="getFile($event)" #fileInput hidden>
+                    <input type="file" name="file" ngModel (change)="getFile($event)" #fileInput hidden required>
                     <md-input-container>
                         <input mdInput type="text" disabled [value]="file? file.name: 'no file selected'">
                     </md-input-container>
@@ -16,7 +16,7 @@
                 <div>
                     <md-select placeholder="select a folder" [(ngModel)]="folderIndex" name="folder">
                         <md-option [value]="-1">Create new</md-option>
-                        <md-option *ngFor="let folder of folders" [value]="index">
+                        <md-option *ngFor="let folder of folders; let i = index" [value]="i">
                             {{folder.title}}
                         </md-option>
                     </md-select>
