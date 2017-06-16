@@ -4,12 +4,12 @@ import {MaterialModule} from '@angular/material';
 import {FormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 
-import {HeaderService, UploadService, AuthService, SnackBarService} from '../services';
+import {HeaderService, AuthService, SnackBarService, FilesService} from '../services';
 
 @NgModule({
     exports: [ MaterialModule,
                FormsModule,
-               RouterModule ]
+               RouterModule],
 })
 export class SharedModule {
     static forRoot(): ModuleWithProviders{
@@ -17,9 +17,9 @@ export class SharedModule {
             ngModule: SharedModule,
             providers: [
                 HeaderService,
-                UploadService,
                 AuthService,
-                SnackBarService
+                SnackBarService,
+                FilesService
             ]
         }
     }

@@ -5,6 +5,8 @@ import {Folder, UploadFile} from '../models';
 
 import {HeaderService, AuthService, UploadService, SnackBarService} from '../services';
 
+import * as firebase from 'firebase/app';
+
 @Component({
     selector: 'add',
     templateUrl: 'views/add-file.component.html',
@@ -34,15 +36,7 @@ export class AddFileComponent {
             () => {this.router.navigate(['/resources'])}
         );
 
-        this.upload.getFolders().then((snapshot) => {
-            snapshot.forEach((childSnapshot) => {
-                var folder = new Folder();
-                folder.title = childSnapshot.key;
-
-                this.folders.push(folder);
-                return false;
-            });
-        });
+        this.upload.watchFolders(this.onnewfolder.bind(this));
     }
 
     onsubmit(){
@@ -68,5 +62,14 @@ export class AddFileComponent {
 
     getFile(event: any){
         this.file = event.target.files[0];
+    }
+
+    onnewfolder(snapshot: firebase.database.DataSnapshot){
+        var folder = new Folder();
+
+        folder.title = snapshot.key;
+
+        if(this.folders.filter(e => e.title === folder.title).length === 0)
+            this.folders.push(folder);        
     }
 }

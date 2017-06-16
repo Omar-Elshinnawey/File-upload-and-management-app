@@ -22,7 +22,7 @@ export class LoginComponent{
     }
 
     ngOnInit(){
-        var sub = this.auth.onAuthState(
+        this.auth.onAuthState(
             () => {this.router.navigate(['admin'])},
             () => {}
         );

@@ -23,8 +23,6 @@ var config = {
         port: 3000
     },
 
-    devtool: 'source-map',
-
     resolve: {
         extensions: ['.ts', '.tsx', '.js']
     },
@@ -41,9 +39,32 @@ var config = {
         new webpack.optimize.CommonsChunkPlugin({
             name: ['bundle', 'vendor', 'polyfills']
         }),
-        /*new webpack.optimize.UglifyJsPlugin({
-            sourceMap: true,
-        }),*/
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                sequences: true,
+                warnings: false,
+                properties: true,
+                dead_code: true,
+                drop_debugger: true,
+                conditionals: true,
+                unused: true,
+                loops: true,
+                comparisons: true,
+                booleans: true,
+                if_return: true,
+                join_vars: true,
+                drop_console: true
+            },
+            mangle: {
+                except: ['$super', '$', 'exports', 'require']
+            },
+            output: {
+                comments: false,
+                beautify: false,
+                space_colon: false
+            },
+            sourceMap: false
+        }),
         new webpack.ContextReplacementPlugin(
             /angular(\\|\/)core(\\|\/)@angular/,
             path.resolve(__dirname, './public/ts'), {}

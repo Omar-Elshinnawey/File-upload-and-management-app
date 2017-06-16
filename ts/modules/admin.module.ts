@@ -3,7 +3,8 @@ import {CommonModule} from '@angular/common';
 import {SharedModule} from './shared.module';
 import {AdminRoutingModule} from './admin-routing.module'
 
-import {AddFileComponent} from '../components';
+import {AddFileComponent, AdminResourcesComponent, DialogComponent} from '../components';
+import { UploadService } from '../services';
 
 @NgModule({
     imports: [
@@ -11,6 +12,10 @@ import {AddFileComponent} from '../components';
         SharedModule,
         AdminRoutingModule
     ],
-    declarations: [AddFileComponent]
+    declarations: [AddFileComponent,
+                   AdminResourcesComponent,
+                   DialogComponent],
+    providers: [UploadService],
+    entryComponents:[DialogComponent]
 })
 export class AdminModule { }

@@ -1,14 +1,17 @@
 import { Component } from '@angular/core';
 import {trigger, style, transition, animate} from '@angular/animations';
+import {MdDialog} from '@angular/material';
 import {Router} from '@angular/router';
+
+import {DialogComponent} from './dialog.component';
 
 import {Folder, UploadFile} from '../models';
 
-import {HeaderService, FilesService, AuthService} from '../services';
+import {HeaderService, FilesService, UploadService, AuthService} from '../services';
 
 @Component({
     selector: 'resources',
-    templateUrl: 'views/resources.component.html',
+    templateUrl: 'views/admin-resources.component.html',
     styleUrls: ['css/resources.component.css'],
     animations: [
         trigger('collapse', [
@@ -23,25 +26,26 @@ import {HeaderService, FilesService, AuthService} from '../services';
         ])
     ]
 })
-export class ResourcesComponent{
+export class AdminResourcesComponent{
 
     folders: Folder[];
 
     constructor(public header: HeaderService, 
                 private filesService: FilesService, 
+                private upload: UploadService, 
+                public dialog: MdDialog,
                 public auth: AuthService,
                 private router: Router) {
-                    
         this.header.closeSidenav();
-        this.header.showDefault();
+        this.header.showAdmin();
 
         this.folders = new Array();
     }
 
     ngOnInit(){
         this.auth.onAuthState(
-            () => {this.router.navigate(['admin'])},
-            () => {}
+            () => {},
+            () => {this.router.navigate(['/resources'])}
         );
 
         this.filesService.getFiles()
@@ -57,7 +61,8 @@ export class ResourcesComponent{
 
                     var file = new UploadFile();
 
-                    file.title = this.getFileName(fileSnapshot.key);
+                    file.title = fileSnapshot.key;
+                    file.showName = this.getFileName(fileSnapshot.key);
                     file.downloadUrl = fileSnapshot.val();
 
                     folder.files.push(file);
@@ -77,5 +82,33 @@ export class ResourcesComponent{
 
     getFileName(name: string){
         return name.substr(name.indexOf(',') + 1);
+    }
+
+    deleteFile(folder:Folder, file: UploadFile){
+
+        this.openDialog().afterClosed().subscribe(
+            (result) => {
+                if(result === true)
+                    this.upload.deleteFile(file.downloadUrl).then(() => {
+                        this.upload.deleteFileData(folder.title, file.title);
+
+                        this.removeFileFromView(folder, file);
+                    });
+            });
+    }
+
+    openDialog(){
+        return this.dialog.open(DialogComponent);
+    }
+
+    removeFileFromView(folder: Folder, file: UploadFile){
+        var index;
+        if(folder.files.length === 1){
+            index = this.folders.indexOf(folder);
+            this.folders.splice(index, 1);
+        }else{
+            index = folder.files.indexOf(file);
+            folder.files.splice(index, 1);
+        }
     }
 }

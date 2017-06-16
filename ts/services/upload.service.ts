@@ -2,10 +2,9 @@ import { Injectable } from '@angular/core';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import {UUID} from 'angular2-uuid';
 
-import * as firebase from 'firebase/app';
+import * as firebase from 'firebase';
 
 import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/observable/throw';
 
 import {UploadFile} from '../models';
 
@@ -34,6 +33,16 @@ export class UploadService{
     }
 
     watchFolders(cb: (snapshot: firebase.database.DataSnapshot) => void){
-        
+        this.db.database.ref('folders').on('child_added', (snapshot) => {
+            cb(snapshot);
+        });
+    }
+
+    deleteFile(url: string){
+        return firebase.storage().refFromURL(url).delete();
+    }
+
+    deleteFileData(foldername: string, filename: string){
+        this.db.database.ref('folders').child(foldername).child(filename).set(null);
     }
 }

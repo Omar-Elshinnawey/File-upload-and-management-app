@@ -1,15 +1,26 @@
-md-list-item span {
+md-list-item span,
+a span {
     margin: 0 5px;
+    text-decoration: none;
+    color: black;
 }
 
-md-list-item {
+md-list-item,
+a {
     cursor: pointer;
+    text-decoration: none;
 }
 
-md-list-item:hover {
+md-list-item:hover,
+a:hover {
     background-color: #ededed;
 }
 
-md-list-item.active {
+md-list-item.active,
+a.active {
     background-color: #ededed;
+}
+
+span.flex {
+    flex: 1;
 }

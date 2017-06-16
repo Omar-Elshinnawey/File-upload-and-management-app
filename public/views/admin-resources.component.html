@@ -18,10 +18,14 @@
                         </md-list-item>
                         <md-divider></md-divider>
                         <div *ngIf="folder.expanded" [@collapse]="folder.expanded">
-                            <a md-list-item *ngFor="let file of folder.files" [href]="file.downloadUrl" target="_blank">
+                            <md-list-item *ngFor="let file of folder.files">
                                 <md-icon>insert_drive_file</md-icon>
-                                <span>{{file.title}}</span>
-                            </a>
+                                <a [href]="file.downloadUrl" target="_blank"><span>{{file.showName}}</span></a>
+                                <span class="flex"></span>
+                                <button type="button" md-mini-fab color="warn" (click)="deleteFile(folder, file)">
+                                    <md-icon>delete</md-icon>
+                                </button>
+                            </md-list-item>
                         </div>
                         <md-divider></md-divider>
                     </div>

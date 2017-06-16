@@ -29,7 +29,7 @@ export const firebaseConfig = {
     declarations: [ AppComponent,
                     LoginComponent,
                     HeaderComponent,
-                    ResourcesComponent ],
+                    ResourcesComponent],
     bootstrap:    [ AppComponent ],
 })
 export class AppModule { }
