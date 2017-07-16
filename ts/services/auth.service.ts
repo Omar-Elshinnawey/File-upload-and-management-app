@@ -5,6 +5,8 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 
 import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/operator/first';
+import 'rxjs/add/operator/map';
 
 @Injectable()
 export class AuthService implements CanActivate {
@@ -34,7 +36,7 @@ export class AuthService implements CanActivate {
 
     canActivate(){
         return this.authObserver.first()
-        .map((user) => {
+        .map((user: firebase.User) => {
             if(user)
                 return true;
             

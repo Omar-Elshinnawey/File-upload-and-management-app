@@ -43,7 +43,7 @@ export class AddFileComponent {
         if(!this.file || this.file.size === 0)
             return this.snackbar.open('Please select a valid file');
             
-        if(!this.folderIndex || this.folderIndex < -1)
+        if(this.folderIndex == null || this.folderIndex < -1)
             return this.snackbar.open('Please select a folder or create new');
             
         var foldername = this.folderIndex === -1? this.folder: this.folders[this.folderIndex].title;
